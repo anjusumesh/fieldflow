@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+:root {
+  --color-bg: #faf7f2;
+  --color-surface: #ffffff;
+  --color-charcoal: #262322;
+  --color-charcoal-soft: #4a4542;
+  --color-border: #e7e1d8;
+  --color-primary: #c1622e;
+  --color-primary-soft: #f3e2d3;
+  --color-green: #4f8a5b;
+  --color-green-soft: #e3efe4;
+  --color-amber: #c8912f;
+  --color-amber-soft: #f7ecd7;
+  --color-red: #b6483f;
+  --color-red-soft: #f6e2df;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-charcoal);
+  font-family: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d9cfc0;
+  border-radius: 8px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: scale(0.97) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.25s ease-out;
+}
+
+.animate-modal-in {
+  animation: modalIn 0.2s ease-out;
+}
