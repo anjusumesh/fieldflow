@@ -1,4 +1,5 @@
-import type { EquipmentStatus, IssuePriority } from '../types';
+import type { EquipmentStatus, IssuePriority, PermitStage } from '../types';
+import { permitStageLabel } from '../data/permitFlow';
 
 const equipmentStatusStyles: Record<EquipmentStatus, string> = {
   RUNNING: 'bg-[var(--color-green-soft)] text-[var(--color-green)]',
@@ -45,6 +46,28 @@ export function PriorityBadge({ priority }: { priority: IssuePriority }) {
       className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium ${priorityStyles[priority]}`}
     >
       {priorityDot[priority]} {priority}
+    </span>
+  );
+}
+
+const permitStageStyles: Record<PermitStage, string> = {
+  'WORK REQUEST': 'bg-black/[0.04] text-[var(--color-charcoal-soft)]',
+  'RISK ASSESSMENT': 'bg-[var(--color-amber-soft)] text-[var(--color-amber)]',
+  'PENDING APPROVAL': 'bg-[var(--color-amber-soft)] text-[var(--color-amber)]',
+  APPROVED: 'bg-[var(--color-green-soft)] text-[var(--color-green)]',
+  'PERMIT ISSUED': 'bg-[var(--color-green-soft)] text-[var(--color-green)]',
+  'WORK STARTED': 'bg-[var(--color-primary-soft)] text-[var(--color-primary)]',
+  'WORK COMPLETED': 'bg-[var(--color-green-soft)] text-[var(--color-green)]',
+  'PERMIT CLOSED': 'bg-black/[0.04] text-[var(--color-charcoal-soft)]',
+};
+
+export function PermitStageBadge({ stage }: { stage: PermitStage }) {
+  return (
+    <span
+      className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium ${permitStageStyles[stage]}`}
+    >
+      <span className="h-1.5 w-1.5 rounded-full bg-current" />
+      {permitStageLabel[stage]}
     </span>
   );
 }

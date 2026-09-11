@@ -9,6 +9,7 @@ import type {
   InspectionChecklist,
   InspectionStatus,
   MaintenanceRequest,
+  Permit,
   ActivityItem,
   DailyReportChecklistItem,
 } from '../types';
@@ -18,10 +19,12 @@ import {
   initialIssues,
   initialInspections,
   initialMaintenanceRequests,
+  initialPermits,
   initialActivity,
   initialDailyReportChecklist,
   previousShiftHandover,
 } from '../data/mockData';
+import { nextPermitStage, permitStageLabel } from '../data/permitFlow';
 
 interface NewIssueInput {
   equipmentId: string;
@@ -46,12 +49,18 @@ interface NewMaintenanceInput {
   notes: string;
 }
 
+interface NewPermitInput {
+  equipmentId: string;
+  title: string;
+}
+
 interface AppState {
   user: typeof currentUser;
   equipment: Equipment[];
   issues: Issue[];
   inspections: Inspection[];
   maintenanceRequests: MaintenanceRequest[];
+  permits: Permit[];
   activity: ActivityItem[];
   dailyReportChecklist: DailyReportChecklistItem[];
   previousHandoverItems: typeof previousShiftHandover.items;
@@ -59,6 +68,8 @@ interface AppState {
   addIssue: (input: NewIssueInput) => void;
   addInspection: (input: NewInspectionInput) => void;
   addMaintenanceRequest: (input: NewMaintenanceInput) => void;
+  addPermit: (input: NewPermitInput) => void;
+  advancePermit: (id: string) => void;
   generateDailyReport: () => void;
   showToast: (message: string) => void;
   clearToast: () => void;
@@ -84,6 +95,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [maintenanceRequests, setMaintenanceRequests] = useState<MaintenanceRequest[]>(
     initialMaintenanceRequests
   );
+  const [permits, setPermits] = useState<Permit[]>(initialPermits);
   const [activity, setActivity] = useState<ActivityItem[]>(initialActivity);
   const [dailyReportChecklist, setDailyReportChecklist] = useState<DailyReportChecklistItem[]>(
     initialDailyReportChecklist
@@ -186,6 +198,31 @@ export function AppProvider({ children }: { children: ReactNode }) {
     showToast('Maintenance request created');
   };
 
+  const addPermit = (input: NewPermitInput) => {
+    const eq = getEquipment(input.equipmentId);
+    const newPermit: Permit = {
+      id: nextId('PTW'),
+      title: input.title,
+      equipmentId: input.equipmentId,
+      stage: 'WORK REQUEST',
+      requestedBy: currentUser.name,
+      createdAt: nowTime(),
+    };
+    setPermits((prev) => [newPermit, ...prev]);
+    pushActivity('Permit requested', `${newPermit.id} · ${eq?.id ?? input.equipmentId}`);
+    showToast('Permit request created');
+  };
+
+  const advancePermit = (id: string) => {
+    const permit = permits.find((p) => p.id === id);
+    if (!permit) return;
+    const next = nextPermitStage(permit.stage);
+    if (!next) return;
+    setPermits((prev) => prev.map((p) => (p.id === id ? { ...p, stage: next } : p)));
+    pushActivity(`Permit ${permit.id} ${permitStageLabel[next].toLowerCase()}`, permit.equipmentId);
+    showToast('Permit updated');
+  };
+
   const generateDailyReport = () => {
     pushActivity('Daily report generated', `${currentUser.shift} Shift · ${currentUser.area}`);
     showToast('Daily report generated');
@@ -198,6 +235,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       issues,
       inspections,
       maintenanceRequests,
+      permits,
       activity,
       dailyReportChecklist,
       previousHandoverItems: previousShiftHandover.items,
@@ -205,12 +243,23 @@ export function AppProvider({ children }: { children: ReactNode }) {
       addIssue,
       addInspection,
       addMaintenanceRequest,
+      addPermit,
+      advancePermit,
       generateDailyReport,
       showToast,
       clearToast,
       getEquipment,
     }),
-    [equipment, issues, inspections, maintenanceRequests, activity, dailyReportChecklist, toast]
+    [
+      equipment,
+      issues,
+      inspections,
+      maintenanceRequests,
+      permits,
+      activity,
+      dailyReportChecklist,
+      toast,
+    ]
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

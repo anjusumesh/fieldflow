@@ -4,6 +4,7 @@ const actions = [
   { label: 'Log Issue', icon: '⚠', kind: 'log-issue' as const },
   { label: 'Inspection', icon: '📋', kind: 'new-inspection' as const },
   { label: 'Maintenance Request', icon: '🔧', kind: 'maintenance-request' as const },
+  { label: 'Request Permit', icon: '🛡', kind: 'request-permit' as const },
   { label: 'Shift Handover', icon: '🔄', kind: 'shift-handover' as const },
 ];
 
@@ -13,7 +14,7 @@ export default function QuickActions() {
   return (
     <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-sm">
       <h2 className="mb-3 text-sm font-semibold text-[var(--color-charcoal)]">Quick Actions</h2>
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
         {actions.map((a) => (
           <button
             key={a.label}

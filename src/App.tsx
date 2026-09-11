@@ -10,6 +10,7 @@ export default function App() {
         <Route path="/" element={<Dashboard />} />
         <Route path="/inspections" element={<Placeholder />} />
         <Route path="/maintenance" element={<Placeholder />} />
+        <Route path="/permits" element={<Placeholder />} />
         <Route path="/issues" element={<Placeholder />} />
         <Route path="/equipment" element={<Placeholder />} />
         <Route path="/reports" element={<Placeholder />} />

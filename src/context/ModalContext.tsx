@@ -1,6 +1,12 @@
 import { createContext, useContext, useState, type ReactNode } from 'react';
 
-type ModalKind = 'log-issue' | 'new-inspection' | 'maintenance-request' | 'shift-handover' | null;
+type ModalKind =
+  | 'log-issue'
+  | 'new-inspection'
+  | 'maintenance-request'
+  | 'request-permit'
+  | 'shift-handover'
+  | null;
 
 interface ModalState {
   kind: ModalKind;

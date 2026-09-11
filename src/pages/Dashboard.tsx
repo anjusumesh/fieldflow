@@ -2,6 +2,7 @@ import KpiCards from '../components/KpiCards';
 import QuickActions from '../components/QuickActions';
 import PreviousShiftHandover from '../components/PreviousShiftHandover';
 import EquipmentStatusTable from '../components/EquipmentStatusTable';
+import PermitDashboard from '../components/PermitDashboard';
 import TodaysActivity from '../components/TodaysActivity';
 import DailyReportProgress from '../components/DailyReportProgress';
 
@@ -15,6 +16,8 @@ export default function Dashboard() {
         <PreviousShiftHandover />
         <EquipmentStatusTable />
       </div>
+
+      <PermitDashboard />
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <TodaysActivity />

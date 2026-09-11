@@ -2,18 +2,21 @@ import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 
 export default function KpiCards() {
-  const { issues, inspections, maintenanceRequests } = useApp();
+  const { issues, inspections, maintenanceRequests, permits } = useApp();
   const navigate = useNavigate();
+
+  const activePermits = permits.filter((p) => p.stage !== 'PERMIT CLOSED');
 
   const cards = [
     { label: 'Open Issues', value: issues.length, icon: '⚠️', to: '/issues' },
     { label: 'Inspections Due', value: inspections.length, icon: '📋', to: '/inspections' },
     { label: 'Maintenance Requests', value: maintenanceRequests.length, icon: '🔧', to: '/maintenance' },
+    { label: 'Active Permits', value: activePermits.length, icon: '🛡', to: '/permits' },
     { label: 'Pending Approvals', value: 1, icon: '⏱️', to: '/reports' },
   ];
 
   return (
-    <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
       {cards.map((c) => (
         <button
           key={c.label}

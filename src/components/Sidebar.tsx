@@ -5,6 +5,7 @@ const navItems = [
   { to: '/issues', label: 'Issues', icon: '⚠' },
   { to: '/inspections', label: 'Inspections', icon: '📋' },
   { to: '/maintenance', label: 'Maintenance', icon: '🔧' },
+  { to: '/permits', label: 'Permit-to-Work', icon: '🛡' },
   { to: '/equipment', label: 'Equipment', icon: '⚙' },
   { to: '/reports', label: 'Reports', icon: '📊' },
 ];

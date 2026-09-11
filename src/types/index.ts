@@ -62,6 +62,25 @@ export interface MaintenanceRequest {
   createdAt: string;
 }
 
+export type PermitStage =
+  | 'WORK REQUEST'
+  | 'RISK ASSESSMENT'
+  | 'PENDING APPROVAL'
+  | 'APPROVED'
+  | 'PERMIT ISSUED'
+  | 'WORK STARTED'
+  | 'WORK COMPLETED'
+  | 'PERMIT CLOSED';
+
+export interface Permit {
+  id: string;
+  title: string;
+  equipmentId: string;
+  stage: PermitStage;
+  requestedBy: string;
+  createdAt: string;
+}
+
 export interface ActivityItem {
   id: string;
   time: string;

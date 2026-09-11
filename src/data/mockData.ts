@@ -3,6 +3,7 @@ import type {
   Issue,
   Inspection,
   MaintenanceRequest,
+  Permit,
   ActivityItem,
   DailyReportChecklistItem,
   CurrentUser,
@@ -166,30 +167,56 @@ export const initialMaintenanceRequests: MaintenanceRequest[] = [
   },
 ];
 
+export const initialPermits: Permit[] = [
+  {
+    id: 'PTW-101',
+    title: 'Pump Maintenance',
+    equipmentId: 'P-102',
+    stage: 'WORK STARTED',
+    requestedBy: 'Anju',
+    createdAt: '08:00',
+  },
+  {
+    id: 'PTW-102',
+    title: 'Equipment Inspection',
+    equipmentId: 'C-01',
+    stage: 'PENDING APPROVAL',
+    requestedBy: 'Anju',
+    createdAt: '07:50',
+  },
+];
+
 export const initialActivity: ActivityItem[] = [
   {
     id: 'A-1',
     time: '09:15',
-    timestamp: 4,
+    timestamp: 5,
     title: 'Inspection completed',
     subtitle: 'Pump P-101',
   },
   {
     id: 'A-2',
     time: '08:45',
-    timestamp: 3,
+    timestamp: 4,
     title: 'Maintenance request created',
     subtitle: 'Pump P-102',
   },
   {
     id: 'A-3',
+    time: '08:30',
+    timestamp: 3,
+    title: 'Permit PTW-101 activated',
+    subtitle: 'Pump P-102',
+  },
+  {
+    id: 'A-4',
     time: '08:20',
     timestamp: 2,
     title: 'Issue reported',
     subtitle: 'Pump P-102 vibration',
   },
   {
-    id: 'A-4',
+    id: 'A-5',
     time: '08:00',
     timestamp: 1,
     title: 'Morning shift started',
